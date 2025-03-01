@@ -33,13 +33,13 @@
             <mat-tab label="Upgrades">
                 <div class="tab-container">
                     <button class="action-button" mat-raised-button 
-                        [disabled]="this.criptoCoins >= this.manualUpgradeCost"                    
+                        [disabled]="this.criptoCoins < this.manualUpgradeCost"                    
                         (click)="upgradeManualMining()"
                         matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} C">
                         Melhorar Mineração
                     </button>
                     <button class="action-button" mat-raised-button 
-                    [disabled]="this.autoMining || this.criptoCoins >= this.manualUpgradeCost"
+                    [disabled]="this.autoMining || this.criptoCoins < this.manualUpgradeCost"
                     (click)="setAutoMining()"
                         matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} C">
                         Auto Mineração
