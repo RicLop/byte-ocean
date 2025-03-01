@@ -18,39 +18,47 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
 })
 export class HomeComponent {
-  btcBalance = 0;
+  // Resources
+  criptoCoins = 0;
   dataPackets = 0;
   memoryBlocks = 0;
   processingCycles = 0;
   binaryCodes = 0;
 
-  manualMiningRate = 0.000001;
+  // Rates
+  baseCriptoCoinsRate = 0.000001;
+  manualCriptoCoinsRate = 0.000001;
   memoryConversionRate = 10;
   processingConversionRate = 5;
   binaryConversionRate = 2;
   criptoConversionRate = 1;
 
+  // Daemons
   daemons: any[] = [];
   daemonId = 1;
-  daemonCost = 0.000002;
-  canDownloadDaemon = false;
 
-  manualUpgradeCost = 0.001;
-  upgradeCost = 0.002;
+  // Costs
+  daemonCost = 0.000002;
+  manualUpgradeCost = 0.000003;
+
+  lastUpdate = Date.now();
 
   constructor() {
-    setInterval(() => this.updateGame(), 1000); // Roda a cada 1 segundo
+    setInterval(() => this.updateGame(), 1000); // Atualização global de 1 segundo
   }
 
   updateGame() {
-    this.updateDaemons();  // Processa Daemons ativos
-    // this.generateResources();  // Adiciona recursos conforme o tempo passa
-    // this.checkMilestones();  // Verifica se milestones foram atingidas
-    // this.triggerRandomEvents();  // Possíveis eventos aleatórios
+    const currentTime = Date.now();
+    const deltaTime = (currentTime - this.lastUpdate) / 1000; // Tempo em segundos desde a última atualização
+    this.lastUpdate = currentTime;
+    
+    // Atualizar Daemons com base no tempo passado
+    this.updateDaemons(deltaTime);
   }
 
+
   mineCripto(rate: number) {
-    this.btcBalance += rate;
+    this.criptoCoins += rate;
   }
 
   convertDataToMemory() {
@@ -77,57 +85,54 @@ export class HomeComponent {
   convertBinaryToCripto() {
     if (this.processingCycles >= this.criptoConversionRate) {
       this.processingCycles -= this.criptoConversionRate;
-      this.btcBalance += 1;
+      this.criptoCoins += 1;
     }
   }
 
   upgradeManualMining() {
-    if (this.btcBalance >= this.manualUpgradeCost) {
-      this.btcBalance -= this.manualUpgradeCost;
-      this.manualMiningRate += 0.0002;
+    if (this.criptoCoins >= this.manualUpgradeCost) {
+      this.criptoCoins -= this.manualUpgradeCost;
+      this.manualCriptoCoinsRate += this.baseCriptoCoinsRate;
       this.manualUpgradeCost *= 1.2;
     }
   }
 
   buyDaemon() {
-    if (this.btcBalance >= this.daemonCost) {
-      this.btcBalance -= this.daemonCost;
-      this.daemons.push({ id: this.daemonId++, resource: 'DP', progress: 0, rate: 1, interval: 25 });
+    if (this.criptoCoins >= this.daemonCost) {
+      this.criptoCoins -= this.daemonCost;
+      this.daemons.push({ id: this.daemonId++, resource: 'D', progress: 0, rate: 1, interval: 10 });
       this.daemonCost *= 1.15;
     }
   }
 
-  fuseDaemons() {
-    // if (this.btcBalance >= this.upgradeCost) {
-    //   this.btcBalance -= this.upgradeCost;
-    //   this.daemons.forEach(daemon => daemon.rate += 0.0002);
-    //   this.upgradeCost *= 1.2;
-    // }
-  }
-
-  updateDaemons() {
+  updateDaemons(deltaTime: number) {
     this.daemons.forEach(daemon => {
-      daemon.progress += daemon.interval;
+      // Atualiza o progresso baseado no tempo real
+      daemon.progress += daemon.rate * deltaTime; // Progresso gradual com base no tempo
+
       if (daemon.progress >= 100) {
+        // Quando o progresso atingir ou ultrapassar 100, realizamos a conversão
         switch (daemon.resource) {
-          case 'BTC':
-            this.btcBalance += daemon.rate;
+          case 'C':
+            this.criptoCoins += daemon.rate;
             break;
-          case 'DP':
+          case 'D':
             this.dataPackets += daemon.rate;
             break;
-          case 'MB':
+          case 'M':
             this.memoryBlocks += daemon.rate;
             break;
-          case 'PC':
+          case 'P':
             this.processingCycles += daemon.rate;
             break;
-          case 'BC':
+          case 'B':
             this.binaryCodes += daemon.rate;
             break;
           default:
             console.log('Recurso desconhecido: ', daemon.resource);
         }
+        
+        // Resetando o progresso após cada ciclo
         daemon.progress = 0;
       }
     });

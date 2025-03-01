@@ -2,11 +2,11 @@
     <div class="left-section">
         <h2>Recursos</h2>
         <ul>
-            <li>Bitcoin (BTC): {{ btcBalance.toFixed(6) }}</li>
-            <li>Pacotes de Dados (DP): {{ dataPackets }}</li>
-            <li>Blocos de Memória (MB): {{ memoryBlocks }}</li>
-            <li>Ciclos de Processamento (PC): {{ processingCycles }}</li>
-            <li>Códigos Binários (BC): {{ binaryCodes }}</li>
+            <li>[C]ripto: {{ criptoCoins.toFixed(6) }}</li>
+            <li>[D]ados: {{ dataPackets }}</li>
+            <li>[M]emória: {{ memoryBlocks }}</li>
+            <li>[P]rocessadores: {{ processingCycles }}</li>
+            <li>[B]inários: {{ binaryCodes }}</li>
         </ul>
     </div>
 
@@ -14,19 +14,19 @@
         <mat-tab-group>
             <mat-tab label="Mineração">
                 <div class="tab-container">
-                    <button mat-raised-button color="primary" (click)="mineCripto(manualMiningRate)">
+                    <button mat-raised-button (click)="mineCripto(manualCriptoCoinsRate)">
                         Mineirar Cripto
                     </button>
-                    <button mat-raised-button color="primary" (click)="convertDataToMemory()">
+                    <button mat-raised-button (click)="convertDataToMemory()">
                         Atribuir Memória
                     </button>
-                    <button mat-raised-button color="primary" (click)="convertMemoryToProcessing()">
+                    <button mat-raised-button (click)="convertMemoryToProcessing()">
                         Gerar Processador
                     </button>
-                    <button mat-raised-button color="primary" (click)="convertProcessingToBinary()">
+                    <button mat-raised-button (click)="convertProcessingToBinary()">
                         Desenvolver Sistema
                     </button>
-                    <button mat-raised-button color="primary" (click)="convertBinaryToCripto()">
+                    <button mat-raised-button (click)="convertBinaryToCripto()">
                         Vender Serviço
                     </button>
                 </div>
@@ -34,8 +34,8 @@
 
             <mat-tab label="Daemons">
                 <div class="tab-container">
-                    <button mat-raised-button color="primary" (click)="buyDaemon()"
-                        matTooltip="Custo: {{ daemonCost.toFixed(6) }} BTC">
+                    <button mat-raised-button (click)="buyDaemon()"
+                        matTooltip="Custo: {{ daemonCost.toFixed(6) }} C">
                         Comprar Daemon
                     </button>
                 </div>
@@ -43,22 +43,20 @@
 
             <mat-tab label="Upgrades">
                 <div class="tab-container">
-                    <button mat-raised-button color="primary" (click)="upgradeManualMining()"
-                        matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} BTC">
+                    <button mat-raised-button (click)="upgradeManualMining()"
+                        matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} C">
                         Melhorar Mineração Manual
                     </button>
                 </div>
             </mat-tab>
         </mat-tab-group>
     </div>
-
-    <!-- Seção Direita - Melhoria de Automação -->
+    
     <div class="right-section">
         <h3>Melhorias</h3>
-        <!-- Barra de upgrade de velocidade da mineração -->
-        <p>Mineração Manual - {{ manualMiningRate.toFixed(6) }} BTC</p>
 
-        <!-- Exibe Daemons adquiridos -->
+        <p>Mineração Manual - {{ manualCriptoCoinsRate.toFixed(6) }} C</p>
+
         <div *ngFor="let daemon of daemons">
             <p>Daemon {{ daemon.id }}: {{ daemon.rate }} {{ daemon.resource }}/s</p>
             <mat-progress-bar mode="determinate" [value]="daemon.progress"></mat-progress-bar>

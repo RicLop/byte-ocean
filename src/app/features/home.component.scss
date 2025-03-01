@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    height: 100vh;
+    height: 100%;
 }
 
 button {
@@ -16,14 +16,17 @@ button {
     color: #fff;
 }
 
-.left-section,
-.right-section {
-    width: 25%;
+.left-section {
+    width: 20%;
 }
 
 .center-section {
     flex-grow: 1;
     text-align: center;
+}
+
+.right-section {
+    width: 30%;
 }
 
 .tab-container {
