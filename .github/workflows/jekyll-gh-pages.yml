@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build Angular project
-        run: ng b --configuration production --base-href https://riclop.github.io/byte-ocean/
+        run: npm run build:prod
 
       - name: List files
         run: ls -R ../
