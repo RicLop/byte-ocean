@@ -24,6 +24,10 @@ jobs:
       - name: Build Angular project
         run: npm run build --prod
 
+      # Comando para listar arquivos no diretório de saída
+      - name: List files in dist/byte-ocean
+        run: ls -R ../
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
