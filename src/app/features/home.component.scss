@@ -3,17 +3,13 @@
     height: 100%;
 }
 
-button {
-    margin: 10px;
-}
-
 .left-section,
 .center-section,
 .right-section {
     padding: 20px;
     box-sizing: border-box;
-    background-color: #1f1938;
     color: #fff;
+    flex-shrink: 0;
 }
 
 .left-section {
@@ -23,14 +19,19 @@ button {
 .center-section {
     flex-grow: 1;
     text-align: center;
+    width: 50%;
 }
 
 .right-section {
     width: 30%;
+    overflow-y: auto;
+    /* Habilita o scroll vertical */
 }
 
 .tab-container {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
     margin-top: 16px;
 }
@@ -45,5 +46,54 @@ ul {
 }
 
 li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+button {
+    margin: 10px;
+    border-radius: 4px;
+    padding: 8px 16px;
+    text-transform: none;
+}
+
+.action-button {
+    text-transform: none;
+    width: 165px;
+}
+
+button.mat-raised-button {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.mat-tab-group {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.mat-tab-links {
+    flex-wrap: wrap;
+}
+
+.daemon-item {
+    margin-bottom: 16px;
+}
+
+.daemon-info {
+    margin: 0 0 4px 0;
+}
+
+.daemon-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.daemon-controls button {
+    flex: 0 0 10%;
+}
+
+.daemon-controls mat-progress-bar {
+    flex: 1;
 }

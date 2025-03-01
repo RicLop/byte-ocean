@@ -11,30 +11,19 @@
     </div>
 
     <div class="center-section">
-        <mat-tab-group>
+        <mat-tab-group animationDuration="0" [dynamicHeight]="true">
             <mat-tab label="Mineração">
                 <div class="tab-container">
-                    <button mat-raised-button (click)="mineCripto(manualCriptoCoinsRate)">
-                        Mineirar Cripto
-                    </button>
-                    <button mat-raised-button (click)="convertDataToMemory()">
-                        Atribuir Memória
-                    </button>
-                    <button mat-raised-button (click)="convertMemoryToProcessing()">
-                        Gerar Processador
-                    </button>
-                    <button mat-raised-button (click)="convertProcessingToBinary()">
-                        Desenvolver Sistema
-                    </button>
-                    <button mat-raised-button (click)="convertBinaryToCripto()">
-                        Vender Serviço
+                    <button class="action-button" mat-raised-button (click)="manualCripto(manualCriptoCoinsRate)">
+                        Mineirar
                     </button>
                 </div>
             </mat-tab>
 
             <mat-tab label="Daemons">
                 <div class="tab-container">
-                    <button mat-raised-button (click)="buyDaemon()"
+                    <button class="action-button" mat-raised-button (click)="buyDaemon()"
+                        [disabled]="this.criptoCoins < this.daemonCost"
                         matTooltip="Custo: {{ daemonCost.toFixed(6) }} C">
                         Comprar Daemon
                     </button>
@@ -43,23 +32,30 @@
 
             <mat-tab label="Upgrades">
                 <div class="tab-container">
-                    <button mat-raised-button (click)="upgradeManualMining()"
+                    <button class="action-button" mat-raised-button (click)="upgradeManualMining()"
                         matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} C">
-                        Melhorar Mineração Manual
+                        Melhorar Mineração
+                    </button>
+                    <button class="action-button" mat-raised-button (click)="setAutoMining()" [disabled]="this.autoMining"
+                        matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} C">
+                        Auto Mineração
                     </button>
                 </div>
             </mat-tab>
         </mat-tab-group>
     </div>
-    
+
     <div class="right-section">
         <h3>Melhorias</h3>
-
         <p>Mineração Manual - {{ manualCriptoCoinsRate.toFixed(6) }} C</p>
-
-        <div *ngFor="let daemon of daemons">
-            <p>Daemon {{ daemon.id }}: {{ daemon.rate }} {{ daemon.resource }}/s</p>
-            <mat-progress-bar mode="determinate" [value]="daemon.progress"></mat-progress-bar>
+        <div *ngFor="let daemon of daemons" class="daemon-item">
+            <p class="daemon-info">Daemon {{ daemon.id }}: {{ daemon.rate }} {{ daemon.resource }}</p>
+            <div class="daemon-controls">
+                <button mat-icon-button (click)="toggleDaemon(daemon)">
+                    <mat-icon>{{ daemon.isPaused ? 'pause' : 'play_arrow' }}</mat-icon>
+                </button>
+                <mat-progress-bar mode="determinate" [value]="daemon.progress"></mat-progress-bar>
+            </div>
         </div>
     </div>
 </div>

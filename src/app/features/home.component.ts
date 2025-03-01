@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -15,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatIconModule,
   ],
 })
 export class HomeComponent {
@@ -28,6 +30,7 @@ export class HomeComponent {
   // Rates
   baseCriptoCoinsRate = 0.000001;
   manualCriptoCoinsRate = 0.000001;
+  dataConversionRate = 0.000010;
   memoryConversionRate = 10;
   processingConversionRate = 5;
   binaryConversionRate = 2;
@@ -41,54 +44,36 @@ export class HomeComponent {
   daemonCost = 0.000002;
   manualUpgradeCost = 0.000003;
 
-  lastUpdate = Date.now();
+  dataDaemonCycle = 2000;
+  processorDaemonCycle = 8000;
+
+  autoMining = false;
 
   constructor() {
-    setInterval(() => this.updateGame(), 1000); // Atualização global de 1 segundo
+    setInterval(() => this.updateGame(), 100);
   }
 
   updateGame() {
-    const currentTime = Date.now();
-    const deltaTime = (currentTime - this.lastUpdate) / 1000; // Tempo em segundos desde a última atualização
-    this.lastUpdate = currentTime;
-    
-    // Atualizar Daemons com base no tempo passado
-    this.updateDaemons(deltaTime);
+    this.updateAutoMining();
+    this.updateDaemons();
   }
 
-
-  mineCripto(rate: number) {
+  manualCripto(rate: number) {
     this.criptoCoins += rate;
   }
 
-  convertDataToMemory() {
-    if (this.dataPackets >= this.memoryConversionRate) {
-      this.dataPackets -= this.memoryConversionRate;
-      this.memoryBlocks += 1;
+  setAutoMining() {
+    if (this.criptoCoins >= this.manualUpgradeCost) {
+      this.criptoCoins -= this.manualUpgradeCost;
+      this.autoMining = true;
     }
   }
 
-  convertMemoryToProcessing() {
-    if (this.memoryBlocks >= this.processingConversionRate) {
-      this.memoryBlocks -= this.processingConversionRate;
-      this.processingCycles += 1;
-    }
+  updateAutoMining() {
+    if (this.autoMining)
+      this.criptoCoins += this.baseCriptoCoinsRate / 10;
   }
-
-  convertProcessingToBinary() {
-    if (this.processingCycles >= this.binaryConversionRate) {
-      this.processingCycles -= this.binaryConversionRate;
-      this.binaryCodes += 1;
-    }
-  }
-
-  convertBinaryToCripto() {
-    if (this.processingCycles >= this.criptoConversionRate) {
-      this.processingCycles -= this.criptoConversionRate;
-      this.criptoCoins += 1;
-    }
-  }
-
+  
   upgradeManualMining() {
     if (this.criptoCoins >= this.manualUpgradeCost) {
       this.criptoCoins -= this.manualUpgradeCost;
@@ -97,44 +82,119 @@ export class HomeComponent {
     }
   }
 
-  buyDaemon() {
-    if (this.criptoCoins >= this.daemonCost) {
-      this.criptoCoins -= this.daemonCost;
-      this.daemons.push({ id: this.daemonId++, resource: 'D', progress: 0, rate: 1, interval: 10 });
-      this.daemonCost *= 1.15;
+  buyDaemon() {    
+    this.criptoCoins -= this.daemonCost;
+    
+    const daemonType = this.selectDaemonType();
+    const cycleTime = this.getCycleTimeForResource(daemonType);
+    
+    this.daemons.push({
+      id: this.daemonId++,
+      resource: daemonType,
+      cycleTime: cycleTime,
+      progress: 0,
+      isRunning: false,
+      isPaused: false,
+    });
+    
+    this.daemonCost *= 1.15;
+  }
+
+  private selectDaemonType(): string {
+    const hasDataDaemon = this.daemons.some(d => d.resource === 'D');
+    if (!hasDataDaemon) {
+      return 'D';
+    }
+
+    const rand = Math.random();
+    return rand > 0.25 ? 'D' : 'M';
+  }
+
+  private getCycleTimeForResource(resource: string): number {
+    switch (resource) {
+      case 'D':
+        return this.dataDaemonCycle;
+      case 'M':
+        return this.processorDaemonCycle;
+      default:
+        return this.dataDaemonCycle;
     }
   }
 
-  updateDaemons(deltaTime: number) {
+  toggleDaemon(daemon: any): void {
+    daemon.isPaused = !daemon.isPaused;
+  }
+
+  updateDaemons() {
     this.daemons.forEach(daemon => {
-      // Atualiza o progresso baseado no tempo real
-      daemon.progress += daemon.rate * deltaTime; // Progresso gradual com base no tempo
+      if (daemon.isPaused)
+        return;
+    
+      if (!daemon.isRunning) {
+        if (!this.consumeResource(daemon.resource))         
+          return;
+
+        daemon.isRunning = true;
+      } 
+
+      const progressIncrement = (100 / daemon.cycleTime) * 100;
+      daemon.progress += progressIncrement;  
 
       if (daemon.progress >= 100) {
-        // Quando o progresso atingir ou ultrapassar 100, realizamos a conversão
-        switch (daemon.resource) {
-          case 'C':
-            this.criptoCoins += daemon.rate;
-            break;
-          case 'D':
-            this.dataPackets += daemon.rate;
-            break;
-          case 'M':
-            this.memoryBlocks += daemon.rate;
-            break;
-          case 'P':
-            this.processingCycles += daemon.rate;
-            break;
-          case 'B':
-            this.binaryCodes += daemon.rate;
-            break;
-          default:
-            console.log('Recurso desconhecido: ', daemon.resource);
-        }
-        
-        // Resetando o progresso após cada ciclo
+        this.processConversion(daemon.resource);
         daemon.progress = 0;
+        daemon.isRunning = false;
       }
     });
+  }
+  
+  private consumeResource(resource: string): boolean {
+    switch (resource) {
+      case 'D':
+        if (this.criptoCoins >= this.dataConversionRate) {
+          this.criptoCoins -= this.dataConversionRate;
+          return true;
+        }
+        return false;
+      case 'M':
+        if (this.dataPackets >= this.memoryConversionRate) {
+          this.dataPackets -= this.memoryConversionRate;
+          return true;
+        }
+        return false;
+      default:
+        return true;
+    }
+  }
+  
+  private processConversion(resource: string): void {
+    switch (resource) {
+      case 'D':
+        this.dataPackets += 1;
+        break;
+      case 'M':
+        this.memoryBlocks += 1;
+        break;
+      case 'P':
+        if (this.memoryBlocks >= this.processingConversionRate) {
+          this.memoryBlocks -= this.processingConversionRate;
+          this.processingCycles += 1;
+        }
+        break;
+      case 'B':
+        if (this.processingCycles >= this.binaryConversionRate) {
+          this.processingCycles -= this.binaryConversionRate;
+          this.binaryCodes += 1;
+        }
+        break;
+      case 'C':
+        if (this.binaryCodes >= this.criptoConversionRate) {
+          this.binaryCodes -= this.criptoConversionRate;
+          this.criptoCoins += 1;
+        }
+        break;
+      default:
+        console.warn("Algo deu errado na conversão.");
+    }
   }
 }
