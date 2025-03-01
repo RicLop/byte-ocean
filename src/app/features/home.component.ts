@@ -71,7 +71,7 @@ export class HomeComponent {
 
   updateAutoMining() {
     if (this.autoMining)
-      this.criptoCoins += this.baseCriptoCoinsRate / 10;
+      this.criptoCoins += this.manualCriptoCoinsRate / 10;
   }
   
   upgradeManualMining() {

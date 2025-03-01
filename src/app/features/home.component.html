@@ -32,11 +32,15 @@
 
             <mat-tab label="Upgrades">
                 <div class="tab-container">
-                    <button class="action-button" mat-raised-button (click)="upgradeManualMining()"
+                    <button class="action-button" mat-raised-button 
+                        [disabled]="this.criptoCoins >= this.manualUpgradeCost"                    
+                        (click)="upgradeManualMining()"
                         matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} C">
                         Melhorar Mineração
                     </button>
-                    <button class="action-button" mat-raised-button (click)="setAutoMining()" [disabled]="this.autoMining"
+                    <button class="action-button" mat-raised-button 
+                    [disabled]="this.autoMining || this.criptoCoins >= this.manualUpgradeCost"
+                    (click)="setAutoMining()"
                         matTooltip="Custo: {{ manualUpgradeCost.toFixed(6) }} C">
                         Auto Mineração
                     </button>
@@ -48,6 +52,8 @@
     <div class="right-section">
         <h3>Melhorias</h3>
         <p>Mineração Manual - {{ manualCriptoCoinsRate.toFixed(6) }} C</p>
+        <p>Mineração Auto   - {{ (manualCriptoCoinsRate / 10).toFixed(10) }} C</p> 
+
         <div *ngFor="let daemon of daemons" class="daemon-item">
             <p class="daemon-info">Daemon {{ daemon.id }}: {{ daemon.rate }} {{ daemon.resource }}</p>
             <div class="daemon-controls">
