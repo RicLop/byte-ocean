@@ -18,64 +18,117 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
 })
 export class HomeComponent {
-  title = 'Cripto Miner';
   btcBalance = 0;
-  progress = 0;
-  miners: any[] = [];
-  minerId = 1;
+  dataPackets = 0;
+  memoryBlocks = 0;
+  processingCycles = 0;
+  binaryCodes = 0;
 
-  minerCost = 0.005; // Custo inicial da mineradora
-  upgradeCost = 0.002; // Custo inicial do upgrade
-  manualUpgradeCost = 0.001; // Custo do upgrade de mineração manual
-  manualMiningRate = 0.001; // Taxa de mineração manual
-  manualMiningProgress = 0; // Progresso da mineração manual
-  canBuyMiner = false; // Se pode comprar mineradora automática
+  manualMiningRate = 0.000001;
+  memoryConversionRate = 10;
+  processingConversionRate = 5;
+  binaryConversionRate = 2;
+  criptoConversionRate = 1;
+
+  daemons: any[] = [];
+  daemonId = 1;
+  daemonCost = 0.000002;
+  canDownloadDaemon = false;
+
+  manualUpgradeCost = 0.001;
+  upgradeCost = 0.002;
 
   constructor() {
-    setInterval(() => this.updateMiners(), 100);
+    setInterval(() => this.updateGame(), 1000); // Roda a cada 1 segundo
   }
 
-  mine() {
-    if (this.progress >= 100) {
-      this.btcBalance += this.manualMiningRate; // Ganha BTC pela mineração manual
-      this.progress = 0;
-    } else {
-      this.progress += 20;
+  updateGame() {
+    this.updateDaemons();  // Processa Daemons ativos
+    // this.generateResources();  // Adiciona recursos conforme o tempo passa
+    // this.checkMilestones();  // Verifica se milestones foram atingidas
+    // this.triggerRandomEvents();  // Possíveis eventos aleatórios
+  }
+
+  mineCripto(rate: number) {
+    this.btcBalance += rate;
+  }
+
+  convertDataToMemory() {
+    if (this.dataPackets >= this.memoryConversionRate) {
+      this.dataPackets -= this.memoryConversionRate;
+      this.memoryBlocks += 1;
     }
   }
 
-  // Upgrade da mineração manual
+  convertMemoryToProcessing() {
+    if (this.memoryBlocks >= this.processingConversionRate) {
+      this.memoryBlocks -= this.processingConversionRate;
+      this.processingCycles += 1;
+    }
+  }
+
+  convertProcessingToBinary() {
+    if (this.processingCycles >= this.binaryConversionRate) {
+      this.processingCycles -= this.binaryConversionRate;
+      this.binaryCodes += 1;
+    }
+  }
+
+  convertBinaryToCripto() {
+    if (this.processingCycles >= this.criptoConversionRate) {
+      this.processingCycles -= this.criptoConversionRate;
+      this.btcBalance += 1;
+    }
+  }
+
   upgradeManualMining() {
     if (this.btcBalance >= this.manualUpgradeCost) {
       this.btcBalance -= this.manualUpgradeCost;
-      this.manualMiningRate += 0.0002; // Aumenta a taxa de mineração manual
-      this.manualUpgradeCost *= 1.2; // Aumenta o custo de upgrade a cada melhoria
-      this.canBuyMiner = true; // Permite comprar mineradoras automáticas após o upgrade
+      this.manualMiningRate += 0.0002;
+      this.manualUpgradeCost *= 1.2;
     }
   }
 
-  buyMiner() {
-    if (this.btcBalance >= this.minerCost) {
-      this.btcBalance -= this.minerCost;
-      this.miners.push({ id: this.minerId++, progress: 0, rate: 0.0005, interval: 5000 });
-      this.minerCost *= 1.15; // Aumenta o custo a cada compra
+  buyDaemon() {
+    if (this.btcBalance >= this.daemonCost) {
+      this.btcBalance -= this.daemonCost;
+      this.daemons.push({ id: this.daemonId++, resource: 'DP', progress: 0, rate: 1, interval: 25 });
+      this.daemonCost *= 1.15;
     }
   }
 
-  upgradeMiners() {
-    if (this.btcBalance >= this.upgradeCost) {
-      this.btcBalance -= this.upgradeCost;
-      this.miners.forEach(miner => miner.rate += 0.0002); // Aumenta a produção das mineradoras
-      this.upgradeCost *= 1.2; // Aumenta o custo a cada melhoria
-    }
+  fuseDaemons() {
+    // if (this.btcBalance >= this.upgradeCost) {
+    //   this.btcBalance -= this.upgradeCost;
+    //   this.daemons.forEach(daemon => daemon.rate += 0.0002);
+    //   this.upgradeCost *= 1.2;
+    // }
   }
 
-  updateMiners() {
-    this.miners.forEach(miner => {
-      miner.progress += (100 / (miner.interval / 100));
-      if (miner.progress >= 100) {
-        this.btcBalance += miner.rate;
-        miner.progress = 0;
+  updateDaemons() {
+    this.daemons.forEach(daemon => {
+      daemon.progress += daemon.interval;
+      if (daemon.progress >= 100) {
+        switch (daemon.resource) {
+          case 'BTC':
+            this.btcBalance += daemon.rate;
+            break;
+          case 'DP':
+            this.dataPackets += daemon.rate;
+            break;
+          case 'MB':
+            this.memoryBlocks += daemon.rate;
+            break;
+          case 'PC':
+            this.processingCycles += daemon.rate;
+            break;
+          case 'BC':
+            this.binaryCodes += daemon.rate;
+            break;
+          default:
+            console.log('Recurso desconhecido: ', daemon.resource);
+        }
+        daemon.progress = 0;
       }
     });
   }
