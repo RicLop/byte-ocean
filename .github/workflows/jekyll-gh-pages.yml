@@ -18,14 +18,14 @@ jobs:
         with:
           node-version: '18.19'
 
-      - name: List files in dist/byte-ocean
-        run: ls -R ../
-
       - name: Install dependencies
         run: npm install
 
       - name: Build Angular project
-        run: npm run build --prod
+        run: ng b --configuration production --base-href https://riclop.github.io/byte-ocean/
+
+      - name: List files
+        run: ls -R ../
   
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
