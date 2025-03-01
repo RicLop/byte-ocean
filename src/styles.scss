@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+
+html {
+    height: 100%;
+    color-scheme: light dark;
+    @include mat.theme((color: mat.$violet-palette,
+            typography: Roboto,
+            density: 0));
+}
+
+html, body {
+    background-color: #1f1938;
+    font-family: 'Source Code Pro', 'Roboto', sans-serif;
+    color: #ffffff;
+}

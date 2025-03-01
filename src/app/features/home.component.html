@@ -1,0 +1,70 @@
+<div class="container">
+    <!-- Seção Esquerda - Recursos -->
+    <div class="left-section">
+        <h2>Criptomoedas</h2>
+        <ul>
+            <li>Bitcoin: BTC {{ btcBalance.toFixed(6) }}</li>
+            <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+        </ul>
+    </div>
+
+    <!-- Seção Central - Mineração e Automação -->
+    <div class="center-section">
+        <h1>{{ title }}</h1>
+        <p>Boas Vindas!</p>
+
+        <mat-tab-group>
+            <!-- Aba de Mineração Manual -->
+            <mat-tab label="Mineração">
+                <div class="tab-container">
+                    <button mat-raised-button color="primary" (click)="mine()">Minerar</button>
+
+                    <!-- Upgrade de Mineração Manual -->
+                    <button mat-raised-button 
+                        color="primary" 
+                        (click)="upgradeManualMining()" 
+                        matTooltip="Melhorar Mineração Manual - Custo: {{ manualUpgradeCost.toFixed(6) }} BTC">
+                        Melhorar Mineração Manual
+                    </button>
+                </div>
+            </mat-tab>
+
+            <!-- Aba de Automação -->
+            <mat-tab label="Gestão">
+                <div class="tab-container">
+                    <!-- Tooltip com custo da mineradora -->
+                    <button mat-raised-button 
+                        color="primary" 
+                        (click)="buyMiner()" 
+                        [disabled]="!canBuyMiner"
+                        matTooltip="Comprar Mineradora - Custo: {{ minerCost.toFixed(6) }} BTC">
+                        Comprar Mineradora
+                    </button>
+
+                    <!-- Tooltip com custo do upgrade -->
+                    <button mat-raised-button 
+                        color="accent" 
+                        (click)="upgradeMiners()" 
+                        matTooltip="Melhorar Velocidade - Custo: {{ upgradeCost.toFixed(6) }} BTC">
+                        Melhorar Velocidade
+                    </button>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <!-- Seção Direita - Melhoria de Automação -->
+    <div class="right-section">
+        <h3>Melhorias</h3>
+
+        <!-- Exibe mineradoras automáticas adquiridas -->
+        <div *ngFor="let miner of miners">
+            <p>Mineradora {{ miner.id }} - Gera {{ miner.rate.toFixed(6) }} BTC/s</p>
+            <mat-progress-bar mode="determinate" [value]="miner.progress"></mat-progress-bar>
+        </div>
+
+        <!-- Barra de upgrade de velocidade da mineração -->
+        <p>Upgrade de Mineração Manual - Gera {{ manualMiningRate.toFixed(6) }} BTC/s</p>
+        <mat-progress-bar mode="determinate" [value]="manualMiningProgress"></mat-progress-bar>
+    </div>
+</div>

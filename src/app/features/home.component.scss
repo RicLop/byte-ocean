@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+button {
+    margin: 10px;
+}
+
+.left-section,
+.center-section,
+.right-section {
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #1f1938;
+    color: #fff;
+}
+
+.left-section,
+.right-section {
+    width: 25%;
+}
+
+.center-section {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.tab-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+mat-progress-bar {
+    margin-top: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
