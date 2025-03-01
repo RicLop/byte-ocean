@@ -13,3 +13,18 @@ html, body {
     font-family: 'Source Code Pro', 'Roboto', sans-serif;
     color: #ffffff;
 }
+
+/* Scroll personalizado para o site */
+::-webkit-scrollbar {
+    width: 8px; /* Largura do scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #7e52ad; /* Cor roxa com transparência */
+    border-radius: 10px; /* Deixa o scrollbar arredondado */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #2c2c2c; /* Cor de fundo do track (escuro) */
+    border-radius: 10px;
+}

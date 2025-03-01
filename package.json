@@ -1,13 +1,14 @@
 {
   "name": "byte-ocean",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "ng build --configuration production --base-href https://riclop.github.io/byte-ocean/ & ngh --dir=dist/byte-ocean/browser"
   },
   "private": true,
   "dependencies": {
