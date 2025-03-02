@@ -6,7 +6,7 @@
 .left-section,
 .center-section,
 .right-section {
-    padding: 20px;
+    height: 98vh;
     box-sizing: border-box;
     color: #fff;
     flex-shrink: 0;
@@ -15,6 +15,7 @@
 
 .left-section {
     width: 20%;
+    background-color: var(--background-200);
 }
 
 .center-section {
@@ -22,5 +23,6 @@
 }
 
 .right-section {
-    width: 30%;
+    width: 30%;    
+    background-color: var(--background-200);
 }

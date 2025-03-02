@@ -1,18 +1,21 @@
 :root {
     --primary-100: #aa83bd;
     --primary-200: #7e52ad;
-    --primary-300: #471b5b;
-    --primary-400: #1f1938;
     --primary-500: #171523;
-    --neutral-100: #202831;
-    --neutral-200: #141a23;
-    --background: var(--primary-500);
+    --neutral-100: #342c43;
+    --neutral-200: #1c1423;
+    --background-100: #1f1938;
+    --background-200: #1a172c;
     --tooltip-background: #141a23;
     --text-color: #ffffff;
 }
 
 * {
     user-select: none;
+    font-family: "Space Grotesk", serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
 }
 
 html {
@@ -21,27 +24,29 @@ html {
 
 html,
 body {
-    background-color: var(--background);
-    font-family: 'Source Code Pro', 'Roboto', sans-serif;
+    background-color: var(--background-100);
     color: var(--text-color);
 }
 
 button {
     background: var(--primary-500);
+    cursor: pointer;
     color: var(--text-color);
     border: 1px solid var(--primary-200);
-    transition: box-shadow 0.3s ease-in-out;
+    transition: box-shadow 0.1s ease;
+    padding: 8px 20px;
 
     &:disabled {
-        background: var(--primary-300); /* Cor de fundo para o botão desabilitado */
-        color: var(--text-disabled); /* Cor do texto para o botão desabilitado */
-        border: 1px solid var(--primary-200); /* Cor da borda do botão desabilitado */
-        cursor: not-allowed; /* Muda o cursor para indicar que o botão está desabilitado */
-        box-shadow: none; /* Remove o efeito de sombra quando desabilitado */
+        background: var(--primary-500);
+        border: 1px solid var(--neutral-200);
+        cursor: not-allowed;
+        box-shadow: none;
+        opacity: 0.5;
+        outline: none;
     }
 
     &:not(:disabled):hover {
-        box-shadow: 0 0 8px var(--primary-100); /* Aplica a sombra apenas quando o botão não está desabilitado */
+        box-shadow: 0 0 8px var(--primary-100);
     }
 }
 
@@ -66,6 +71,7 @@ button {
 
 ::-webkit-scrollbar {
     width: 8px;
+
 }
 
 ::-webkit-scrollbar-thumb {
