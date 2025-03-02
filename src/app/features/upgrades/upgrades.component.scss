@@ -1,0 +1,35 @@
+.upgrades {
+    padding: 20px;
+    box-sizing: border-box;
+    color: #fff;
+    flex-shrink: 0;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.deamons-section {
+    height: 30vw;
+    overflow-y: auto;
+}
+
+.daemon-item {
+    margin-bottom: 16px;
+}
+
+.daemon-info {
+    margin: 0 0 4px 0;
+}
+
+.daemon-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.daemon-controls button {
+    flex: 0 0 10%;
+}
+
+.daemon-controls mat-progress-bar {
+    width: 50%;
+}

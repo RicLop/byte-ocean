@@ -1,0 +1,19 @@
+<div class="upgrades">
+    <h3>Melhorias</h3>
+    <p>Mineração Manual: {{ getUpgradeRate(0) }} C</p>
+    <p *ngIf="hasUpgrade(1)">
+        Mineração Automática: {{ getUpgradeRate(1) }} C
+    </p>
+
+    <div class="deamons-section">
+        <div *ngFor="let daemon of getDaemons()" class="daemon-item">
+            <p class="daemon-info">{{ daemon.id }}-Daemon [{{ daemon.resource }}]</p>
+            <div class="daemon-controls">
+                <button mat-icon-button (click)="toggleDaemon(daemon)">
+                    <mat-icon>{{ daemon.isPaused ? 'pause' : 'play_arrow' }}</mat-icon>
+                </button>
+                <mat-progress-bar mode="determinate" [value]="daemon.progress"></mat-progress-bar>
+            </div>
+        </div>
+    </div>
+</div>

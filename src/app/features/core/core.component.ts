@@ -3,66 +3,29 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { buyDaemon, daemonCost, daemons, isDaemonAvailable, updateDaemons } from '../../utils/daemon.utils';
-import { isUpgradeAvailable, updateUpgrades, upgrade, upgrades } from '../../utils/upgrade.utils';
-import { Upgrade } from '../../models/upgrade.model';
-import { interval } from 'rxjs';
-import { ResourceType } from '../../enums/resource-type.enum';
+import { buyDaemon, daemonCost, daemons, isDaemonAvailable } from '../../utils/daemon.utils';
+import { isUpgradeAvailable, upgrade, upgrades } from '../../utils/upgrade.utils';
 import { Upgrades } from '../../enums/upgrade.enum';
 import { resources } from '../../constants/resources.const';
 import { TooltipDirective } from '../../directives/tooltip.directive';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  selector: 'app-core',
+  templateUrl: './core.component.html',
+  styleUrl: './core.component.scss',
   imports: [
     CommonModule,
-    MatTabsModule,
     MatButtonModule,
-    MatTooltipModule,
     MatProgressBarModule,
-    MatIconModule,
     TooltipDirective,
   ],
 })
-export class HomeComponent {
-  baseCriptoCoinsRate = 0.000001;
-  manualCriptoCoinsRate = 0.000001;
-
-  constructor() {
-    interval(100).subscribe(() => this.updateGame());
-  }
-
-  updateGame() {
-    updateUpgrades();
-    updateDaemons();
-  }
-
-  // Resources
-
-  getResourceCount(index: number) {
-    const count = resources[index].count;
-
-    if (index == ResourceType.CriptoCoins) {
-      const padded = Math.floor(count).toString().padStart(7, '0');
-      return padded[0] + '.' + padded.slice(1);
-    }
-
-    return count;
-  }
-
-  isResourceunlocked(index: number) {
-    return resources[index].unlocked;
-  }
+export class CoreComponent {
 
   manualCripto() {
     resources[0].count += upgrades[Upgrades.MineManual].rate;
   }
-
-  // Upgrades
 
   geUpgradeRate(index: number) {
     const rate = upgrades[index].rate;
@@ -94,8 +57,6 @@ export class HomeComponent {
     upgrade(index);
   }
 
-  // Daemons
-
   getDaemons() {
     return daemons;
   }
@@ -111,9 +72,5 @@ export class HomeComponent {
 
   buyDaemon() {
     buyDaemon();
-  }
-
-  toggleDaemon(daemon: any): void {
-    daemon.isPaused = !daemon.isPaused;
   }
 }

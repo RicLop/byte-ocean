@@ -1,4 +1,20 @@
 import { resources } from "../constants/resources.const";
+import { ResourceType } from "../enums/resource-type.enum";
+
+export function getResourceCount(index: number): String {
+  const count = resources[index].count;
+
+  if (index == ResourceType.CriptoCoins) {
+    const padded = Math.floor(count).toString().padStart(7, '0');
+    return padded[0] + '.' + padded.slice(1);
+  }
+
+  return count.toString();
+}
+
+export function isResourceunlocked(index: number): boolean {
+  return resources[index].unlocked;
+}
 
 export function consumeResource(resource: string): boolean {
   switch (resource) {

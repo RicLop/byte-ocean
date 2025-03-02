@@ -1,0 +1,44 @@
+<div class="core">
+    <section class="section">
+        <h2>Mineração</h2>
+        <div class="divider"></div>
+        <div class="section-container">
+            <button class="action-button" mat-raised-button (click)="manualCripto()">
+                Minerar
+            </button>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Upgrades</h2>
+        <div class="divider"></div>
+        <div class="section-container">
+            <span appTooltip="Custo: {{ getUpgradeCost(0) }} C">
+                <button class="action-button" mat-raised-button [disabled]="!isUpgradeAvailable(0)"
+                    (click)="upgrade(0)">
+                    Melhorar Mineração ({{ getUpgradeCount(0) }})
+                </button>
+            </span>
+            <span appTooltip="Custo: {{ getUpgradeCost(1) }} C">
+                <button class="action-button" mat-raised-button [disabled]="!isUpgradeAvailable(1)"
+                    (click)="upgrade(1)">
+                    {{ hasUpgrade(1) ? 'Melhorar' : 'Comprar' }}
+                    Auto Mineração
+                    {{ hasUpgrade(1) ? ' (' + getUpgradeCount(1) + ')' : '' }}
+                </button>
+            </span>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Daemons</h2>
+        <div class="divider"></div>
+        <div class="section-container">
+            <span appTooltip="Custo: {{ getDaemonCost() }} C">
+                <button class="action-button" mat-raised-button [disabled]="!isDaemonAvailable()" (click)="buyDaemon()">
+                    Comprar Daemon
+                </button>
+            </span>
+        </div>
+    </section>
+</div>

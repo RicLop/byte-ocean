@@ -1,0 +1,10 @@
+<div class="panel">
+    <h2>Recursos</h2>
+    <ul>
+        <li *ngIf="isResourceunlocked(0)">[C]ripto: {{ getResourceCount(0) }}</li>
+        <li *ngIf="isResourceunlocked(1)">[D]ados: {{ getResourceCount(1) }}</li>
+        <li *ngIf="isResourceunlocked(2)">[M]emória: {{ getResourceCount(2) }}</li>
+        <li *ngIf="isResourceunlocked(3)">[P]rocessadores: {{ getResourceCount(3) }}</li>
+        <li *ngIf="isResourceunlocked(4)">[B]inários: {{ getResourceCount(4) }}</li>
+    </ul>
+</div>
