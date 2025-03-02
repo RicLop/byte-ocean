@@ -4,6 +4,7 @@ export interface Resource {
     name: string;
     shortname: string;
     type: ResourceType;
+    unlocked: boolean;
     count: number;
     conversion: Conversion | undefined;
 }

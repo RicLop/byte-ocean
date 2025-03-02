@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="left-section">
+        <h2>Recursos</h2>
+        <ul>
+            <li *ngIf="isResourceunlocked(0)">[C]ripto: {{ getResourceCount(0) }}</li>
+            <li *ngIf="isResourceunlocked(1)">[D]ados: {{ getResourceCount(1) }}</li>
+            <li *ngIf="isResourceunlocked(2)">[M]emória: {{ getResourceCount(2) }}</li>
+            <li *ngIf="isResourceunlocked(3)">[P]rocessadores: {{ getResourceCount(3) }}</li>
+            <li *ngIf="isResourceunlocked(4)">[B]inários: {{ getResourceCount(4) }}</li>
+        </ul>
+    </div>
+
+    <div class="center-section">
+        <section class="section">
+            <h2>Mineração</h2>
+            <div class="divider"></div>
+            <div class="tab-container">
+                <button class="action-button" mat-raised-button (click)="manualCripto()">
+                    Minerar
+                </button>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>Upgrades</h2>
+            <div class="divider"></div>
+            <div class="tab-container">
+                <span appTooltip="Custo: {{ getUpgradeCost(0) }} C">
+                    <button class="action-button" mat-raised-button [disabled]="!isUpgradeAvailable(0)"
+                        (click)="upgrade(0)">
+                        Melhorar Mineração ({{ getUpgradeCount(0) }})
+                    </button>
+                </span>
+                <span appTooltip="Custo: {{ getUpgradeCost(1) }} C">
+                    <button class="action-button" mat-raised-button [disabled]="!isUpgradeAvailable(1)"
+                        (click)="upgrade(1)">
+                        Auto Mineração
+                    </button>
+                </span>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Daemons</h2>
+            <div class="divider"></div>
+            <div class="tab-container">
+                <span appTooltip="Custo: {{ getDaemonCost() }} C">
+                    <button class="action-button" mat-raised-button [disabled]="!isDaemonAvailable()"
+                        (click)="buyDaemon()">
+                        Comprar Daemon
+                    </button>
+                </span>
+            </div>
+        </section>
+    </div>    
+
+    <div class="right-section">
+        <h3>Melhorias</h3>
+        <p>Mineração Manual: {{ geUpgradeRate(0) }} C</p>
+        <p *ngIf="getUpgradeCount(1) == 1">
+            Mineração Automática: {{ geUpgradeRate(1) }} C
+        </p>
+
+        <div class="deamons-section">
+            <div *ngFor="let daemon of getDaemons()" class="daemon-item">
+                <p class="daemon-info">{{ daemon.id }}-Daemon [{{ daemon.resource }}]</p>
+                <div class="daemon-controls">
+                    <button mat-icon-button (click)="toggleDaemon(daemon)">
+                        <mat-icon>{{ daemon.isPaused ? 'pause' : 'play_arrow' }}</mat-icon>
+                    </button>
+                    <mat-progress-bar mode="determinate" [value]="daemon.progress"></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

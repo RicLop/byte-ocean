@@ -59,6 +59,23 @@ button {
     text-transform: none;
 }
 
+button:disabled {
+    pointer-events: none; /* Impede interações com o botão */
+    user-select: none; /* Impede que o usuário selecione texto ao clicar */
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os itens no início */
+    padding: 16px;
+}
+
+h2 {
+    margin-bottom: 5px;
+    align-self: flex-start; /* Garante que o título fique no começo */
+}
+
 .action-button {
     text-transform: none;
     width: 165px;
@@ -98,5 +115,5 @@ button.mat-raised-button {
 }
 
 .daemon-controls mat-progress-bar {
-    flex: 1;
+    width: 50%;
 }

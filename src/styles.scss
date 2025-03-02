@@ -8,23 +8,46 @@ html {
             density: 0));
 }
 
-html, body {
+html,
+body {
     background-color: #1f1938;
     font-family: 'Source Code Pro', 'Roboto', sans-serif;
     color: #ffffff;
 }
 
-/* Scroll personalizado para o site */
+* {
+    user-select: none;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: #7e52ad;
+    margin: 8px 0;
+}
+
+.tooltip {
+    position: fixed;
+    background-color: #040413;
+    color: #fff;
+    font-size: smaller;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #7e52ad;
+    z-index: 1000;
+    white-space: nowrap;
+  }
+
 ::-webkit-scrollbar {
-    width: 8px; /* Largura do scrollbar */
+    width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #7e52ad; /* Cor roxa com transparência */
-    border-radius: 10px; /* Deixa o scrollbar arredondado */
+    background-color: #7e52ad;
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #2c2c2c; /* Cor de fundo do track (escuro) */
+    background-color: #48444e;
     border-radius: 10px;
 }

@@ -1,9 +1,11 @@
+import { resources } from "../constants/resources.const";
+import { ResourceType } from "../enums/resource-type.enum";
 import { Daemon } from "../models/daemon.model";
-import { consumeResource, processConversion, resources } from "./game.utils";
+import { consumeResource, processConversion } from "./resource.utils";
 
 export const daemons: Array<Daemon> = [];
 
-export let daemonCost = 0.000002;
+export let daemonCost = 200;
 let daemonId = 1;
 
 const dataDaemonCycle = 2000;
@@ -28,6 +30,10 @@ const getCycleTimeForResource = (resource: string): number => {
         default:
             return dataDaemonCycle;
     }
+}
+
+export function isDaemonAvailable(): boolean {
+  return resources[ResourceType.CriptoCoins].count >= daemonCost;
 }
 
 export function buyDaemon() {
