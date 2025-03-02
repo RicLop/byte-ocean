@@ -3,7 +3,7 @@
         <h2>Mineração</h2>
         <div class="divider"></div>
         <div class="section-container">
-            <button class="action-button" mat-raised-button (click)="manualCripto()">
+            <button class="action-button" (click)="manualCripto()">
                 Minerar
             </button>
         </div>
@@ -24,7 +24,7 @@
         <div class="divider"></div>
         <div class="section-container">
             <span appTooltip="Custo: {{ getDaemonCost() }} C">
-                <button class="action-button" mat-raised-button [disabled]="!isDaemonAvailable()" (click)="buyDaemon()">
+                <button class="action-button" [disabled]="!isDaemonAvailable()" (click)="buyDaemon()">
                     Comprar Daemon
                 </button>
             </span>

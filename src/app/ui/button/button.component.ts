@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Component, Input } from '@angular/core';
 import { isUpgradeAvailable, upgrade, upgrades } from '../../utils/upgrade.utils';
 import { TooltipDirective } from '../../directives/tooltip.directive';
 import { resources } from '../../constants/resources.const';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 
 @Component({
   selector: 'byo-button',
@@ -12,9 +11,8 @@ import { resources } from '../../constants/resources.const';
   styleUrl: './button.component.scss',
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatProgressBarModule,
     TooltipDirective,
+    ProgressBarComponent,
   ],
 })
 export class ButtonComponent {

@@ -1,13 +1,9 @@
 {
   "name": "byte-ocean",
-  "version": "0.0.4",
+  "version": "0.5.0",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build:prod": "ng build --configuration production",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "build": "ng build --configuration development",
     "deploy": "ng build --configuration production --base-href https://riclop.github.io/byte-ocean/ & ngh --dir=dist/byte-ocean/browser"
   },
   "private": true,
@@ -17,10 +13,6 @@
     "@angular/compiler": "^19.2.0",
     "@angular/core": "^19.2.0",
     "@angular/forms": "^19.2.0",
-    "@angular/material": "^19.2.1",
-    "@angular/platform-browser": "^19.2.0",
-    "@angular/platform-browser-dynamic": "^19.2.0",
-    "@angular/router": "^19.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

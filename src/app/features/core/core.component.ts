@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { buyDaemon, daemonCost, daemons, isDaemonAvailable } from '../../utils/daemon.utils';
 import { isUpgradeAvailable, upgrade, upgrades } from '../../utils/upgrade.utils';
 import { Upgrades } from '../../enums/upgrade.enum';
@@ -15,8 +13,6 @@ import { ButtonComponent } from '../../ui/button/button.component';
   styleUrl: './core.component.scss',
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatProgressBarModule,
     TooltipDirective,
     ButtonComponent,
   ],

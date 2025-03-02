@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { buyDaemon, daemonCost, daemons, isDaemonAvailable } from '../../utils/daemon.utils';
 import { isUpgradeAvailable, upgrades } from '../../utils/upgrade.utils';
+import { IconComponent } from '../../ui/icon/icon.component';
+import { ProgressBarComponent } from '../../ui/progress-bar/progress-bar.component';
 
 @Component({
   selector: 'byo-upgrades',
@@ -12,9 +11,8 @@ import { isUpgradeAvailable, upgrades } from '../../utils/upgrade.utils';
   styleUrl: './upgrades.component.scss',
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatIconModule,
+    IconComponent,
+    ProgressBarComponent,
   ],
 })
 export class UpgradesComponent {

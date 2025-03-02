@@ -9,10 +9,10 @@
         <div *ngFor="let daemon of getDaemons()" class="daemon-item">
             <p class="daemon-info">{{ daemon.id }}-Daemon [{{ daemon.resource }}]</p>
             <div class="daemon-controls">
-                <button mat-icon-button (click)="toggleDaemon(daemon)">
-                    <mat-icon>{{ daemon.isPaused ? 'pause' : 'play_arrow' }}</mat-icon>
+                <button  (click)="toggleDaemon(daemon)">
+                    <byo-icon [icon]="daemon.isPaused ? 'pause' : 'play_arrow'" />
                 </button>
-                <mat-progress-bar mode="determinate" [value]="daemon.progress"></mat-progress-bar>
+                <byo-progress-bar mode="determinate" [value]="daemon.progress" />
             </div>
         </div>
     </div>

@@ -1,8 +1,8 @@
 <span class="byo-button" appTooltip="Custo: {{ getUpgradeCost() }} C">
-    <button mat-raised-button class="action"          
+    <button class="action"          
         [disabled]="!isUpgradeAvailable()" 
         (click)="upgrade()">
         {{ text }}
     </button>
-    <mat-progress-bar mode="determinate" [value]="getAvailabilityProgress()" />
+    <byo-progress-bar [value]="getAvailabilityProgress()" />
 </span>
