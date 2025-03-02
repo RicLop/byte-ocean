@@ -75,6 +75,10 @@ export class HomeComponent {
     return upgrades[index].count;
   }
 
+  hasUpgrade(index: number): boolean {
+    return upgrades[index].count >= 1;
+  }
+
   getUpgradeCost(index: number) {
     const cost = upgrades[index].cost;
 

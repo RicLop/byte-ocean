@@ -34,7 +34,9 @@
                 <span appTooltip="Custo: {{ getUpgradeCost(1) }} C">
                     <button class="action-button" mat-raised-button [disabled]="!isUpgradeAvailable(1)"
                         (click)="upgrade(1)">
-                        Auto Mineração
+                        {{ hasUpgrade(1) ? 'Melhorar' : 'Comprar' }} 
+                        Auto Mineração 
+                        {{ hasUpgrade(1) ? ' (' + getUpgradeCount(1) + ')' : '' }}
                     </button>
                 </span>
             </div>
@@ -57,7 +59,7 @@
     <div class="right-section">
         <h3>Melhorias</h3>
         <p>Mineração Manual: {{ geUpgradeRate(0) }} C</p>
-        <p *ngIf="getUpgradeCount(1) == 1">
+        <p *ngIf="hasUpgrade(1)">
             Mineração Automática: {{ geUpgradeRate(1) }} C
         </p>
 
