@@ -13,20 +13,9 @@
         <h2>Upgrades</h2>
         <div class="divider"></div>
         <div class="section-container">
-            <span appTooltip="Custo: {{ getUpgradeCost(0) }} C">
-                <button class="action-button" mat-raised-button [disabled]="!isUpgradeAvailable(0)"
-                    (click)="upgrade(0)">
-                    Melhorar Mineração ({{ getUpgradeCount(0) }})
-                </button>
-            </span>
-            <span appTooltip="Custo: {{ getUpgradeCost(1) }} C">
-                <button class="action-button" mat-raised-button [disabled]="!isUpgradeAvailable(1)"
-                    (click)="upgrade(1)">
-                    {{ hasUpgrade(1) ? 'Melhorar' : 'Comprar' }}
-                    Auto Mineração
-                    {{ hasUpgrade(1) ? ' (' + getUpgradeCount(1) + ')' : '' }}
-                </button>
-            </span>
+            <byo-button [index]="0" [text]="'Melhorar Mineração (' + getUpgradeCount(0) + ')'" />
+            <byo-button [index]="1"
+                [text]="!hasUpgrade(1) ? 'Comprar Auto Mineração' : 'Melhorar Auto Mineração (' + getUpgradeCount(1) + ')'" />
         </div>
     </section>
 

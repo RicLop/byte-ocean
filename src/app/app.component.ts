@@ -8,7 +8,7 @@ import { updateUpgrades } from './utils/upgrade.utils';
 import { updateDaemons } from './utils/daemon.utils';
 
 @Component({
-  selector: 'app-root', 
+  selector: 'byo-root', 
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   imports: [

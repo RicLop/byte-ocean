@@ -7,7 +7,7 @@ import { buyDaemon, daemonCost, daemons, isDaemonAvailable } from '../../utils/d
 import { isUpgradeAvailable, upgrades } from '../../utils/upgrade.utils';
 
 @Component({
-  selector: 'app-upgrades',
+  selector: 'byo-upgrades',
   templateUrl: './upgrades.component.html',
   styleUrl: './upgrades.component.scss',
   imports: [

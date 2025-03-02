@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { getResourceCount, isResourceunlocked } from '../../utils/resource.utils';
 
 @Component({
-  selector: 'app-resources',
+  selector: 'byo-resources',
   templateUrl: './resources.component.html',
   styleUrl: './resources.component.scss',
   imports: [

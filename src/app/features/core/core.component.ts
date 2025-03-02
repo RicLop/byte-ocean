@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { buyDaemon, daemonCost, daemons, isDaemonAvailable } from '../../utils/daemon.utils';
 import { isUpgradeAvailable, upgrade, upgrades } from '../../utils/upgrade.utils';
 import { Upgrades } from '../../enums/upgrade.enum';
 import { resources } from '../../constants/resources.const';
 import { TooltipDirective } from '../../directives/tooltip.directive';
+import { ButtonComponent } from '../../ui/button/button.component';
 
 @Component({
-  selector: 'app-core',
+  selector: 'byo-core',
   templateUrl: './core.component.html',
   styleUrl: './core.component.scss',
   imports: [
@@ -19,6 +18,7 @@ import { TooltipDirective } from '../../directives/tooltip.directive';
     MatButtonModule,
     MatProgressBarModule,
     TooltipDirective,
+    ButtonComponent,
   ],
 })
 export class CoreComponent {
