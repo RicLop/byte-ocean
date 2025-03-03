@@ -1,8 +1,7 @@
-<span class="byo-button" appTooltip="Custo: {{ getUpgradeCost() }} C">
-    <button class="action"          
-        [disabled]="!isUpgradeAvailable()" 
-        (click)="upgrade()">
-        {{ text }}
-    </button>
-    <byo-progress-bar [value]="getAvailabilityProgress()" />
+<span class="byo-button" [appTooltip]="tooltip">
+  <button class="action" [disabled]="disabled" (click)="handleClick()">
+    <byo-icon *ngIf="icon" [icon]="icon"></byo-icon>
+    {{ text }}
+  </button>
+  <byo-progress-bar *ngIf="showProgress" [value]="progress"></byo-progress-bar>
 </span>

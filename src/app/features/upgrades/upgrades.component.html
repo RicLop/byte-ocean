@@ -7,7 +7,7 @@
 
     <div class="deamons-section">
         <div *ngFor="let daemon of getDaemons()" class="daemon-item">
-            <p class="daemon-info">{{ daemon.id }}-Daemon [{{ daemon.resource }}]</p>
+            <p class="daemon-info">{{ daemon.id }} Daemon [{{ daemon.outputAmount }} {{ daemon.outputResource }}]</p>
             <div class="daemon-controls">
                 <button class="daemon-button" (click)="toggleDaemon(daemon)">
                     <byo-icon [icon]="daemon.isPaused ? 'pause' : 'play_arrow'" />

@@ -13,9 +13,24 @@
         <h2>Upgrades</h2>
         <div class="divider"></div>
         <div class="section-container">
-            <byo-button [index]="0" [text]="'Melhorar Mineração (' + getUpgradeCount(0) + ')'" />
-            <byo-button [index]="1"
-                [text]="!hasUpgrade(1) ? 'Comprar Auto Mineração' : 'Melhorar Auto Mineração (' + getUpgradeCount(1) + ')'" />
+            <byo-button 
+                [text]="'Mineração (' + getUpgradeCount(0) + ')'"
+                tooltip="Custo: {{ getUpgradeCost(0) }} C"
+                [disabled]="!isUpgradeAvailable(0)"
+                [showProgress]="true"
+                [progress]="getUpgradeAvailabilityProgress(0)"
+                [icon]="!hasUpgrade(0) ? 'add' : 'keyboard_arrow_up'"
+                (buttonClick)="upgrade(0)">
+            </byo-button>
+            <byo-button                
+                [text]="'Auto Mineração (' + getUpgradeCount(1) + ')'"
+                tooltip="Custo: {{ getUpgradeCost(1) }} C"
+                [disabled]="!isUpgradeAvailable(1)"
+                [showProgress]="true"
+                [progress]="getUpgradeAvailabilityProgress(1)"
+                [icon]="!hasUpgrade(1) ? 'add' : 'keyboard_arrow_up'"
+                (buttonClick)="upgrade(1)">
+            </byo-button>
         </div>
     </section>
 
@@ -23,11 +38,15 @@
         <h2>Daemons</h2>
         <div class="divider"></div>
         <div class="section-container">
-            <span appTooltip="Custo: {{ getDaemonCost() }} C">
-                <button class="action-button" [disabled]="!isDaemonAvailable()" (click)="buyDaemon()">
-                    Comprar Daemon
-                </button>
-            </span>
+            <byo-button 
+                text="Data Daemon"
+                tooltip="Custo: {{ getDaemonCost(1) }} C"
+                [disabled]="!isDaemonAvailable(1)"
+                [showProgress]="true"
+                [progress]="getDaemonAvailabilityProgress(1)"
+                icon="add"
+                (buttonClick)="buyDaemon(1)">
+            </byo-button>
         </div>
     </section>
 </div>

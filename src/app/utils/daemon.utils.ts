@@ -3,57 +3,78 @@ import { ResourceType } from "../enums/resource-type.enum";
 import { Daemon } from "../models/daemon.model";
 import { consumeResource, processConversion } from "./resource.utils";
 
-export const daemons: Array<Daemon> = [];
-
-export let daemonCost = 200;
-let daemonId = 1;
-
-const dataDaemonCycle = 2000;
-const processorDaemonCycle = 8000;
-
-const selectDaemonType = (): string => {
-  const hasDataDaemon = daemons.some(d => d.resource === 'D');
-  if (!hasDataDaemon) {
-    return 'D';
-  }
-
-  const rand = Math.random();
-  return rand > 0.25 ? 'D' : 'M';
-}
-
-const getCycleTimeForResource = (resource: string): number => {
-  switch (resource) {
-    case 'D':
-      return dataDaemonCycle;
-    case 'M':
-      return processorDaemonCycle;
-    default:
-      return dataDaemonCycle;
-  }
-}
-
-export function isDaemonAvailable(): boolean {
-  return resources[ResourceType.CriptoCoins].count >= daemonCost;
-}
-
-export function buyDaemon() {
-  resources[0].count -= daemonCost;
-
-  const daemonType = selectDaemonType();
-  const cycleTime = getCycleTimeForResource(daemonType);
-
-  daemons.push({
-    id: daemonId++,
+export const availableDaemons: Array<Daemon> = [
+  {
+    id: 0,
     life: 10,
+    inputAmount: 2,
+    inputResource: ResourceType.BinaryCodes,
+    outputAmount: 1,
+    outputResource: ResourceType.CriptoCoins,
     efficiency: 1,
-    resource: daemonType,
-    cycleTime: cycleTime,
+    cycleTime: 10000,
+    cost: 1000,
     progress: 0,
     isRunning: false,
     isPaused: false,
-  });
+  },  
+  {
+    id: 0,
+    life: 10,
+    inputAmount: 5,
+    inputResource: ResourceType.CriptoCoins,
+    outputAmount: 1,
+    outputResource: ResourceType.DataPackets,
+    efficiency: 1,
+    cycleTime: 2000,
+    cost: 200,
+    progress: 0,
+    isRunning: false,
+    isPaused: false,
+  },
+  {
+    id: 0,
+    life: 10,
+    inputAmount: 10,
+    inputResource: ResourceType.DataPackets,
+    outputAmount: 1,
+    outputResource: ResourceType.MemoryBlocks,
+    efficiency: 1,
+    cycleTime: 8000,
+    cost: 400,
+    progress: 0,
+    isRunning: false,
+    isPaused: false,
+  },
+];
 
-  daemonCost *= 1.15;
+export const daemons: Array<Daemon> = [];
+
+let daemonId = 1;
+
+const selectDaemonType = (): ResourceType => {
+  const hasDataDaemon = daemons.some(d => d.inputResource === ResourceType.DataPackets);
+  if (!hasDataDaemon) 
+    return ResourceType.DataPackets;  
+  
+  const rand = Math.random();
+  if (rand > 0.25)
+    return ResourceType.DataPackets;
+  else 
+    return ResourceType.MemoryBlocks;
+}
+
+export function isDaemonAvailable(index: number): boolean {
+  return resources[ResourceType.CriptoCoins].count >= availableDaemons[index].cost;
+}
+
+export function buyDaemon(index: number) {
+  resources[ResourceType.CriptoCoins].count -= availableDaemons[index].cost;
+
+  const availableDaemon = availableDaemons.find(x => x.outputResource === index);
+  const daemon = JSON.parse(JSON.stringify(availableDaemon));
+  daemon.id = daemonId++;
+  daemons.push(JSON.parse(JSON.stringify(daemon)));
 }
 
 export function updateDaemons() {
@@ -62,17 +83,16 @@ export function updateDaemons() {
       return;
 
     if (!daemon.isRunning) {
-      if (!consumeResource(daemon.resource))
+      if (!consumeResource(daemon.inputResource, daemon.inputAmount))
         return;
-
       daemon.isRunning = true;
     }
-
+    
     const progressIncrement = (100 / daemon.cycleTime) * 100;
     daemon.progress += progressIncrement;
 
     if (daemon.progress >= 100) {
-      processConversion(daemon.resource);
+      processConversion(daemon.outputResource, daemon.outputAmount);
       daemon.progress = 0;
       daemon.isRunning = false;
     }

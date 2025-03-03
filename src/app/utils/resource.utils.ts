@@ -16,17 +16,17 @@ export function isResourceunlocked(index: number): boolean {
   return resources[index].unlocked;
 }
 
-export function consumeResource(resource: string): boolean {
+export function consumeResource(resource: ResourceType, amount: number): boolean {
   switch (resource) {
-    case 'D':
-      if (resources[0].count >= resources[1].conversion?.countUsed!) {
-        resources[0].count -= resources[1].conversion?.countUsed!;
+    case ResourceType.DataPackets:
+      if (resources[0].count >= amount) {
+        resources[0].count -= amount;
         return true;
       }
       return false;
-    case 'M':
-      if (resources[1].count >= resources[2].conversion?.countUsed!) {
-        resources[1].count -= resources[2].conversion?.countUsed!;
+    case ResourceType.MemoryBlocks:
+      if (resources[1].count >= amount) {
+        resources[1].count -= amount;
         return true;
       }
       return false;
@@ -35,17 +35,17 @@ export function consumeResource(resource: string): boolean {
   }
 }
 
-export function processConversion(resource: string): void {
+export function processConversion(resource: ResourceType, amount: number): void {
   switch (resource) {
-    case 'D':
+    case ResourceType.DataPackets:
       if (!resources[1].unlocked)
         resources[1].unlocked = true;
-      resources[1].count += 1;
+      resources[1].count += amount;
       break;
-    case 'M':
+    case ResourceType.MemoryBlocks:
       if (!resources[2].unlocked)
         resources[2].unlocked = true;
-      resources[2].count += 1;
+      resources[2].count += amount;
       break;
     default:
       break;

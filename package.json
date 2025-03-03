@@ -1,6 +1,6 @@
 {
   "name": "byte-ocean",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "scripts": {
     "start": "ng serve",
     "build": "ng build --configuration development",
