@@ -1,18 +1,22 @@
-.panel {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    overflow-x: auto;
+.resource-table {
+    width: 95%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-top: 20px;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+.resource-table th:nth-child(1),
+.resource-table td:nth-child(1) {
+    width: 60%;
+    text-align: left;
 }
 
-li {
-    margin-bottom: 5px;
+.resource-table th:nth-child(2),
+.resource-table td:nth-child(2) {
+    width: 40%;
+    text-align: right;
+}
+
+.hidden {
+    display: none;
 }

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { daemons } from '../../utils/daemon.utils';
-import { isUpgradeAvailable, upgrades } from '../../utils/upgrade.utils';
 import { IconComponent } from '../../ui/icon/icon.component';
 import { ProgressBarComponent } from '../../ui/progress-bar/progress-bar.component';
+import { upgrades } from '../../constants/upgrades.const';
 
 @Component({
   selector: 'byo-upgrades',
@@ -17,11 +17,8 @@ import { ProgressBarComponent } from '../../ui/progress-bar/progress-bar.compone
 })
 export class UpgradesComponent {
 
-  getUpgradeRate(index: number) {
-    const rate = upgrades[index].rate;
-
-    const padded = Math.floor(rate).toString().padStart(7, '0');
-    return padded[0] + '.' + padded.slice(1);
+  getUpgradeRate(index: number): number {
+    return upgrades[index].rate;
   }
 
   hasUpgrade(index: number): boolean {

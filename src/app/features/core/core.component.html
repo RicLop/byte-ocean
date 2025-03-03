@@ -3,9 +3,12 @@
         <h2>Mineração</h2>
         <div class="divider"></div>
         <div class="section-container">
-            <button class="action-button" (click)="manualCripto()">
-                Minerar
-            </button>
+            <byo-button 
+                text="Minerar"
+                tooltip="Produz {{  getUpgradeRate(0) }} C"
+                icon="start"
+                (buttonClick)="manualCripto()">
+            </byo-button>
         </div>
     </section>
 
@@ -14,8 +17,9 @@
         <div class="divider"></div>
         <div class="section-container">
             <byo-button 
-                [text]="'Mineração (' + getUpgradeCount(0) + ')'"
-                tooltip="Custo: {{ getUpgradeCost(0) }} C"
+                text="Mineração"
+                [badge]="getUpgradeCount(0)"
+                tooltip="Custa {{ getUpgradeCost(0) }} C"
                 [disabled]="!isUpgradeAvailable(0)"
                 [showProgress]="true"
                 [progress]="getUpgradeAvailabilityProgress(0)"
@@ -23,8 +27,9 @@
                 (buttonClick)="upgrade(0)">
             </byo-button>
             <byo-button                
-                [text]="'Auto Mineração (' + getUpgradeCount(1) + ')'"
-                tooltip="Custo: {{ getUpgradeCost(1) }} C"
+                text="Auto Mineração"                
+                [badge]="getUpgradeCount(1)"
+                tooltip="Custa {{ getUpgradeCost(1) }} C"
                 [disabled]="!isUpgradeAvailable(1)"
                 [showProgress]="true"
                 [progress]="getUpgradeAvailabilityProgress(1)"
@@ -40,7 +45,7 @@
         <div class="section-container">
             <byo-button 
                 text="Data Daemon"
-                tooltip="Custo: {{ getDaemonCost(1) }} C"
+                tooltip="Custa {{ getDaemonCost(1) }} C"
                 [disabled]="!isDaemonAvailable(1)"
                 [showProgress]="true"
                 [progress]="getDaemonAvailabilityProgress(1)"

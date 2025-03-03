@@ -1,31 +1,36 @@
 .byo-button {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  /* Estilo para o botão: usa inline-flex para centralizar os itens */
-  button.action {
-    display: inline-flex;
-    align-items: center;      /* Alinha verticalmente */
-    justify-content: center;  /* Centraliza horizontalmente */
-    width: 100%;
-    padding: 10px;            /* Ajuste conforme necessário */
-    font-size: 16px;          /* Tamanho base para o texto */
-  }
-  
-  /* Estilo para o ícone: herdando o tamanho da fonte do botão */
-  byo-icon {
-    font-size: 1em;           /* Igual ao tamanho do texto */
-    width: 1em;
-    height: 1em;
-    margin-right: 8px;        /* Espaço entre ícone e texto */
-  }
-  
-  byo-progress-bar {
-    position: absolute;
-    width: 100%;
-    top: 25px;
-    bottom: 0;
-    left: 0;
-  }
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.byo-button > byo-icon {
+  font-size: 1em;
+  width: 1em;
+  height: 1em;
+  margin-right: 8px;
+}
+
+.badge {
+  margin-left: 8px;
+  background: var(--primary-500);
+  cursor: pointer;
+  color: var(--text-color);
+  border: 2px solid var(--primary-200);
+  font-weight: 500;
+  padding: 2px 7px 2px 7px;
+  border-radius: 60%;
+  font-size: 0.8rem;
+}
+
+byo-progress-bar {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}

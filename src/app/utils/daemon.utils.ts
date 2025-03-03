@@ -52,18 +52,6 @@ export const daemons: Array<Daemon> = [];
 
 let daemonId = 1;
 
-const selectDaemonType = (): ResourceType => {
-  const hasDataDaemon = daemons.some(d => d.inputResource === ResourceType.DataPackets);
-  if (!hasDataDaemon) 
-    return ResourceType.DataPackets;  
-  
-  const rand = Math.random();
-  if (rand > 0.25)
-    return ResourceType.DataPackets;
-  else 
-    return ResourceType.MemoryBlocks;
-}
-
 export function isDaemonAvailable(index: number): boolean {
   return resources[ResourceType.CriptoCoins].count >= availableDaemons[index].cost;
 }
@@ -83,7 +71,7 @@ export function updateDaemons() {
       return;
 
     if (!daemon.isRunning) {
-      if (!consumeResource(daemon.inputResource, daemon.inputAmount))
+      if (!consumeResource(daemon.inputResource, daemon.outputResource, daemon.inputAmount))
         return;
       daemon.isRunning = true;
     }

@@ -17,6 +17,7 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class ButtonComponent {
   @Input() text: string = '';
+  @Input() badge?: number;
   @Input() tooltip: string = '';
   @Input() disabled: boolean = false;
   @Input() showProgress: boolean = false;

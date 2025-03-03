@@ -6,11 +6,5 @@ export interface Resource {
     type: ResourceType;
     unlocked: boolean;
     count: number;
-    conversion: Conversion | undefined;
-}
-
-export interface Conversion {
-    resourceUsed: ResourceType;
-    countUsed: number;
-    countReceived: number;
+    max: number;
 }

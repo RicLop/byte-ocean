@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { availableDaemons, buyDaemon, daemons, isDaemonAvailable } from '../../utils/daemon.utils';
-import { isUpgradeAvailable, upgrade, upgrades } from '../../utils/upgrade.utils';
+import { isUpgradeAvailable, upgrade } from '../../utils/upgrade.utils';
 import { Upgrades } from '../../enums/upgrade.enum';
 import { resources } from '../../constants/resources.const';
 import { ButtonComponent } from '../../ui/button/button.component';
+import { upgrades } from '../../constants/upgrades.const';
 
 @Component({
   selector: 'byo-core',
@@ -18,19 +19,19 @@ import { ButtonComponent } from '../../ui/button/button.component';
 export class CoreComponent {
 
   manualCripto() {
-    resources[0].count += upgrades[Upgrades.MineManual].rate;
+    if (resources[0].count >= resources[0].max)
+      return;
+
+    var total = resources[0].count + upgrades[Upgrades.MineManual].rate;
+    resources[0].count = resources[0].max > total ? total : resources[0].max;
   }
 
-  geUpgradeRate(index: number): string {
-    const rate = upgrades[index].rate;
-    const padded = Math.floor(rate).toString().padStart(7, '0');
-    return padded[0] + '.' + padded.slice(1);
+  getUpgradeRate(index: number): number {
+    return upgrades[index].rate;
   }
 
-  getUpgradeCost(index: number): string {
-    const cost = upgrades[index].cost;
-    const padded = Math.floor(cost).toString().padStart(7, '0');
-    return padded[0] + '.' + padded.slice(1);
+  getUpgradeCost(index: number): number {
+    return upgrades[index].cost;
   }
 
   getUpgradeCount(index: number): number {
@@ -61,10 +62,8 @@ export class CoreComponent {
     return daemons;
   }
 
-  getDaemonCost(index: number): string {
-    const daemon = availableDaemons[index];
-    const padded = Math.floor(daemon.cost).toString().padStart(7, '0');
-    return padded[0] + '.' + padded.slice(1);
+  getDaemonCost(index: number): number {
+    return availableDaemons[index].cost;
   }
 
   getDaemonAvailabilityProgress(index: number): number {

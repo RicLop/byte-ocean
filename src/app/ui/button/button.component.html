@@ -1,7 +1,17 @@
-<span class="byo-button" [appTooltip]="tooltip">
-  <button class="action" [disabled]="disabled" (click)="handleClick()">
-    <byo-icon *ngIf="icon" [icon]="icon"></byo-icon>
-    {{ text }}
-  </button>
-  <byo-progress-bar *ngIf="showProgress" [value]="progress"></byo-progress-bar>
-</span>
+<button
+  class="byo-button"
+  [appTooltip]="tooltip"
+  [disabled]="disabled"
+  (click)="handleClick()"
+>
+  <byo-icon *ngIf="icon" [icon]="icon"></byo-icon>
+  <span class="button-text">{{ text }}</span>
+  <span class="badge" *ngIf="badge !== null && badge !== undefined">
+    {{ badge }}
+  </span>
+
+  <byo-progress-bar
+    *ngIf="showProgress"
+    [value]="progress">
+  </byo-progress-bar>
+</button>

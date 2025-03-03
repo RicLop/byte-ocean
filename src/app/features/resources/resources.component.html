@@ -1,10 +1,17 @@
-<div class="panel">
-    <h2>Recursos</h2>
-    <ul>
-        <li *ngIf="isResourceunlocked(0)">[C]ripto: {{ getResourceCount(0) }}</li>
-        <li *ngIf="isResourceunlocked(1)">[D]ados: {{ getResourceCount(1) }}</li>
-        <li *ngIf="isResourceunlocked(2)">[M]emória: {{ getResourceCount(2) }}</li>
-        <li *ngIf="isResourceunlocked(3)">[P]rocessadores: {{ getResourceCount(3) }}</li>
-        <li *ngIf="isResourceunlocked(4)">[B]inários: {{ getResourceCount(4) }}</li>
-    </ul>
-</div>
+<table class="resource-table">
+    <thead>
+        <tr>
+            <th>Recurso</th>
+            <th>Quantidade</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of getResources()" [ngClass]="{ 'hidden': !isResourceunlocked(r.type) }">
+            <td>{{ r.name }}</td>
+            <td>
+                <span>{{ r.count }}/{{ r.max }}</span>
+                <byo-progress-bar *ngIf="r.max > 0" [value]="(r.count / r.max) * 100"></byo-progress-bar>
+            </td>
+        </tr>
+    </tbody>
+</table>
