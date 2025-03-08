@@ -1,0 +1,26 @@
+<section class="daemon">
+  <div class="section-container" [ngClass]="{ 'hidden': hasDaemonSystem()}">
+    <byo-button 
+      text="Comprar Daemon System" 
+      tooltip="Custa {{ daemonSystemCost }} C" 
+      [disabled]="!isDaemonSystemAvailable()"
+      [showProgress]="true" 
+      [progress]="getDaemonSystemAvailabilityProgress()" 
+      icon="add"
+      (buttonClick)="buyDaemonSystem()">
+    </byo-button>
+  </div>
+  <div class="daemon-container" [ngClass]="{ 'hidden': !hasDaemonSystem()}">
+    <h2>Daemons</h2>
+    <div class="divider"></div>
+    <byo-button 
+      text="Gerar Daemon" 
+      tooltip="Custa {{ 10 }} D" 
+      [disabled]="!canGenerateDaemon()"
+      [showProgress]="true" 
+      [progress]="getDaemonAvailabilityProgress()" 
+      icon="add"
+      (buttonClick)="generateDaemon()">
+    </byo-button>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+
+.daemon {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.section-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+.daemon-container {
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}

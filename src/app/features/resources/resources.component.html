@@ -6,7 +6,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let r of getResources()" [ngClass]="{ 'hidden': !isResourceunlocked(r.type) }">
+        <tr *ngFor="let r of getResources()" [ngClass]="{ 'hidden': !r.unlocked}">
             <td>{{ r.name }}</td>
             <td>
                 <span>{{ r.count }}/{{ r.max }}</span>

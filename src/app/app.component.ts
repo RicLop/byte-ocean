@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ResourcesComponent } from './features/resources/resources.component';
 import { CoreComponent } from './features/core/core.component';
-import { UpgradesComponent } from './features/upgrades/upgrades.component';
 import { interval } from 'rxjs';
-import { updateUpgrades } from './utils/upgrade.utils';
-import { updateDaemons } from './utils/daemon.utils';
+import { updateUpgrades } from './core/utils/upgrade.util';
+import { DaemonsComponent } from './features/daemons/daemons.component';
 
 @Component({
   selector: 'byo-root', 
@@ -15,7 +14,7 @@ import { updateDaemons } from './utils/daemon.utils';
     CommonModule,    
     ResourcesComponent,
     CoreComponent,
-    UpgradesComponent
+    DaemonsComponent
   ]
 })
 export class AppComponent {
@@ -26,6 +25,5 @@ export class AppComponent {
 
   updateGame() {
     updateUpgrades();
-    updateDaemons();
   }
 }

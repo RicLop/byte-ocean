@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { buyDaemon, daemons, isDaemonAvailable } from '../../utils/daemon.utils';
-import { isUpgradeAvailable, upgrade } from '../../utils/upgrade.utils';
-import { ButtonComponent } from '../../ui/button/button.component';
-import { Upgrades } from '../../enums/upgrade.enum';
-import { resources } from '../../constants/resources.const';
-import { upgrades as upgradesConst} from '../../constants/upgrades.const';
-import { availableDaemons } from '../../constants/available-daemons.const';
-import { ResourceType } from '../../enums/resource-type.enum';
+import { ButtonComponent } from '../../core/ui/button/button.component';
+import { upgrades } from '../../core/models/upgrade.model';
+import { isUpgradeAvailable, upgrade } from '../../core/utils/upgrade.util'; 
+import { resources, ResourceType } from '../../core/models/resource.model';
+import { buyData, canBuyData, manualCripto } from '../../core/utils/resource.util'; 
+import { daemons } from '../../core/utils/daemon.util';
+
 
 @Component({
   selector: 'byo-core',
@@ -20,37 +19,27 @@ import { ResourceType } from '../../enums/resource-type.enum';
 })
 export class CoreComponent {
 
-  upgrades = upgradesConst;
+  getUpgrades = () => upgrades;
 
-  availableDaemons = availableDaemons;
+  getDaemons = () => daemons;
 
-  daemons = daemons;
+  manualCripto = () => manualCripto();
 
-  manualCripto() {
-    const resource = resources[0];
-    if (resource.count >= resource.max) 
-      return;
+  canBuyData = () => canBuyData();
+  buyData = () => buyData();
 
-    resource.count = Math.min(resource.count + this.upgrades[Upgrades.MineManual].rate, resource.max);
+  getDataAvailabilityProgress(): number {
+    const progress = (resources[ResourceType.CriptoCoins].count / 500) * 100;
+    return Math.min(progress, 100);
   }
 
   getUpgradeAvailabilityProgress(index: number): number {
-    const upgrade = this.upgrades[index];
+    const upgrade = upgrades[index];
     const progress = (resources[upgrade.costType].count / upgrade.cost) * 100;
     return Math.min(progress, 100);
   }
 
-  getDaemonAvailabilityProgress(index: number): number {
-    const daemon = availableDaemons[index];
-    const progress = (resources[0].count / daemon.cost) * 100;
-    return Math.min(progress, 100);
-  } 
-
   isUpgradeAvailable = (index: number) => isUpgradeAvailable(index);
 
   upgrade = (index: number) => upgrade(index);
-
-  isDaemonAvailable = (index: number) => isDaemonAvailable(index);
-
-  buyDaemon = (index: number) => buyDaemon(index);
 }

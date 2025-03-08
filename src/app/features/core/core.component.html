@@ -1,53 +1,42 @@
 <div class="core">
-    <!-- Seção: Mineração -->
-    <section class="section">
-      <h2>Mineração</h2>
-      <div class="divider"></div>
-      <div class="section-container">
+  <section class="section">
+    <h2>Mineração</h2>
+    <div class="divider"></div>
+    <div class="section-container">
+      <byo-button
+        text="Minerar"
+        tooltip="Produz {{ getUpgrades()[0].rate }} C"
+        icon="start"
+        (buttonClick)="manualCripto()">
+      </byo-button>
+      <byo-button
+        text="Comprar Dados"
+        tooltip="Custa 500 C Produz 1 D"
+        [disabled]="!canBuyData()"
+        [showProgress]="true"
+        [progress]="getDataAvailabilityProgress()"
+        icon="start"
+        (buttonClick)="buyData()">
+      </byo-button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Upgrades</h2>
+    <div class="divider"></div>
+    <div class="section-container">
+      <ng-container *ngFor="let up of getUpgrades()">
         <byo-button
-          text="Minerar"
-          tooltip="Produz {{ upgrades[0].rate }} C"
-          icon="start"
-          (buttonClick)="manualCripto()">
+          [text]="up.name"
+          [badge]="up.count"
+          tooltip="Custa {{ up.cost }} C Produz {{ up.rate }} C"
+          [disabled]="!isUpgradeAvailable(up.id)"
+          [showProgress]="true"
+          [progress]="getUpgradeAvailabilityProgress(up.id)"
+          [icon]="up.count == 0 ? 'add' : 'keyboard_arrow_up'"
+          (buttonClick)="upgrade(up.id)">
         </byo-button>
-      </div>
-    </section>
-  
-    <!-- Seção: Upgrades -->
-    <section class="section">
-      <h2>Upgrades</h2>
-      <div class="divider"></div>
-      <div class="section-container">
-        <ng-container *ngFor="let up of upgrades">
-          <byo-button
-            [text]="up.name"
-            [badge]="up.count"
-            tooltip="Custa {{ up.cost }} C"
-            [disabled]="!isUpgradeAvailable(up.id)"
-            [showProgress]="true"
-            [progress]="getUpgradeAvailabilityProgress(up.id)"
-            [icon]="upgrades[up.id].count == 0 ? 'add' : 'keyboard_arrow_up'"
-            (buttonClick)="upgrade(up.id)">
-          </byo-button>
-        </ng-container>
-      </div>
-    </section>
-  
-    <!-- Seção: Daemons -->
-    <section class="section">
-      <h2>Daemons</h2>
-      <div class="divider"></div>
-      <div class="section-container">
-          <byo-button
-            text="Comprar Daemon System"
-            tooltip="Custa {{ availableDaemons[0].cost }} C"
-            [disabled]="!isDaemonAvailable(0)"
-            [showProgress]="true"
-            [progress]="getDaemonAvailabilityProgress(0)"
-            icon="add"
-            (buttonClick)="buyDaemon(0)">
-          </byo-button>
-      </div>
-    </section>
-  </div>
-  
+      </ng-container>
+    </div>
+  </section>
+</div>

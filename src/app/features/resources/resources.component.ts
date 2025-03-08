@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { getResourceCount, isResourceunlocked } from '../../utils/resource.utils';
-import { resources } from '../../constants/resources.const';
-import { ProgressBarComponent } from '../../ui/progress-bar/progress-bar.component';
+import { ProgressBarComponent } from '../../core/ui/progress-bar/progress-bar.component';
+import { resources } from '../../core/models/resource.model';
 
 @Component({
   selector: 'byo-resources',
@@ -13,17 +12,8 @@ import { ProgressBarComponent } from '../../ui/progress-bar/progress-bar.compone
     ProgressBarComponent
   ],
 })
-export class ResourcesComponent {
-  
+export class ResourcesComponent {  
   getResources() {
     return resources;
   }
-
-  getResourceCount(index: number) {
-    return getResourceCount(index);
-  }
-
-  isResourceunlocked(index: number) {
-    return isResourceunlocked(index);
-  }  
 }
